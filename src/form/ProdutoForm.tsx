@@ -31,8 +31,6 @@ export function ProdutoForm(props: IFormTypes) {
   const { navigate, params } = useNavigateApp();
   const { obterTabelaDePrecoAtivaPorProdutoId } = useApiTabelaDePreco();
   const { recortarBase64, resolveUploadImagem } = useArquivo();
-  const [itemTabelaDePreco, setItemTabelaDePreco] =
-    useState<IItemTabelaDePreco>();
   const [tabelaDePreco, setTabelaDePreco] = useState<ITabelaDePreco>();
   const [itensTabelaDePreco, setItensTabelaDePreco] = useState<
     IItemTabelaDePreco[]
@@ -51,9 +49,6 @@ export function ProdutoForm(props: IFormTypes) {
   });
 
   async function submit() {
-    const novositensTabelaDePreco = itemTabelaDePreco?.id
-      ? itensTabelaDePreco?.filter((x) => x.id !== itemTabelaDePreco?.id)
-      : itensTabelaDePreco;
     const body = {
       ...form.values,
       novaFoto: form.values.novaFoto
@@ -62,10 +57,7 @@ export function ProdutoForm(props: IFormTypes) {
       tamanhosIds: form.values.tamanhos?.map((x) => x.id),
       pesosIds: form.values.pesos?.map((x) => x.id),
       tabelaDePrecoId: tabelaDePreco?.id,
-      itensTabelaDePreco: [
-        ...novositensTabelaDePreco,
-        { ...itemTabelaDePreco },
-      ],
+      itensTabelaDePreco,
     };
     const response =
       props.action === "create"
@@ -83,12 +75,6 @@ export function ProdutoForm(props: IFormTypes) {
 
     if (responseTabelaDePreco?.itensTabelaDePreco) {
       setItensTabelaDePreco(responseTabelaDePreco.itensTabelaDePreco);
-      const temPrecoProduto = responseTabelaDePreco.itensTabelaDePreco.find(
-        (x) => x.produtoId === params.id && !x.pesoId && !x.tamanhoId
-      );
-      if (temPrecoProduto) {
-        setItemTabelaDePreco(temPrecoProduto);
-      }
     }
 
     if (props.action === "create") {
@@ -328,38 +314,6 @@ export function ProdutoForm(props: IFormTypes) {
               <TextApp titulo={`Tabela de preço: `} fontWeight={600} />
               <TextApp titulo={`${tabelaDePreco.descricao}`} color="primary" />
             </BoxApp>
-            <FormRoot.FormRow spacing={3}>
-              <FormItemRow sm={3} xs={12}>
-                <InputApp
-                  value={itemTabelaDePreco?.valorUnitarioAtacado}
-                  label={"Vlr atacado"}
-                  mask={MaskType.MONEY}
-                  id={`valorUnitarioAtacado`}
-                  readonly={readonly}
-                  onChange={(_, value) =>
-                    setItemTabelaDePreco({
-                      ...(itemTabelaDePreco ?? ({} as any)),
-                      valorUnitarioAtacado: limparMascaraDinheiro(value) ?? 0,
-                    })
-                  }
-                />
-              </FormItemRow>
-              <FormItemRow sm={3} xs={12}>
-                <InputApp
-                  value={itemTabelaDePreco?.valorUnitarioVarejo}
-                  label={"Vlr varejo"}
-                  readonly={readonly}
-                  mask={MaskType.MONEY}
-                  id={`valorUnitarioVarejo`}
-                  onChange={(_, value) =>
-                    setItemTabelaDePreco({
-                      ...(itemTabelaDePreco ?? ({} as any)),
-                      valorUnitarioVarejo: limparMascaraDinheiro(value) ?? 0,
-                    })
-                  }
-                />
-              </FormItemRow>
-            </FormRoot.FormRow>
             {form.values.pesos?.length > 0 && (
               <>
                 <TextApp titulo="Preços dos pesos" />

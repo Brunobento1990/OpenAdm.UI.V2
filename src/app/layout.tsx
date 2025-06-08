@@ -5,6 +5,7 @@ import { ThemeProvider } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 import { useSnackbarApp } from "@/components/snack/SnackBarApp";
 import { useModal } from "@/components/modal";
+import { AuthProviderApp } from "@/context/AuthContextApp";
 
 export default function RootLayout({
   children,
@@ -18,10 +19,12 @@ export default function RootLayout({
     <html lang="pt-BR">
       <body>
         <ThemeProvider theme={baselightTheme}>
-          <CssBaseline />
-          <ComponentSnack />
-          <ComponentModal />
-          {children}
+          <AuthProviderApp>
+            <CssBaseline />
+            <ComponentSnack />
+            <ComponentModal />
+            {children}
+          </AuthProviderApp>
         </ThemeProvider>
       </body>
     </html>

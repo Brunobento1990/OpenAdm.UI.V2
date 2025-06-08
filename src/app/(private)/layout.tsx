@@ -1,4 +1,3 @@
-import { AuthProviderApp } from "@/context/AuthContextApp";
 import { PageLayout } from "@/layout/PageLayout";
 
 export default function RootLayout({
@@ -6,9 +5,5 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  return (
-    <AuthProviderApp>
-      <PageLayout>{children}</PageLayout>
-    </AuthProviderApp>
-  );
+  return <PageLayout>{children}</PageLayout>;
 }

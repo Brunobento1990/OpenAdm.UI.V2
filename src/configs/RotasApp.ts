@@ -52,8 +52,18 @@ export const rotasApp = {
   },
   tabelaDePreco: {
     create: "tabela-de-preco/create",
-    view: "tabela-de-preco/view",
+    view: "/vendas/tabela-de-preco/view",
     paginacao: "/vendas/tabela-de-preco",
-    edit: "vendas/tabela-de-preco/edit",
+    edit: "/vendas/tabela-de-preco/edit",
+  },
+  configuracaoEmail: {
+    create: "configuracao/email",
+  },
+  configuracaoPedido: {
+    create: "configuracao/pedido",
+  },
+  pedido: {
+    modificarStatusPedido: "/vendas/pedidos/modificar-status-pedido",
+    paginacao: "/vendas/pedidos",
   },
 };

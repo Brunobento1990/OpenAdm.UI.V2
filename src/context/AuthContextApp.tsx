@@ -24,17 +24,13 @@ export const AuthContextApp = createContext({} as IAuthContextApp);
 export function AuthProviderApp(props: IAppLayoutProvider) {
   const [usuario, setUsuario] = useState<IUsuario>();
   const { getItem, setItem, removeItem } = useLocalStorageApp();
-  const { navigate, path } = useNavigateApp();
+  const { navigate } = useNavigateApp();
 
   function init() {
     const usuarioLocalStorage = getItem<IUsuario>(
       keysLocalStorage.usuario,
       true
     );
-    if (!usuarioLocalStorage) {
-      navigate(rotasApp.login);
-      return;
-    }
     if (usuarioLocalStorage) {
       setUsuario(usuarioLocalStorage);
     }

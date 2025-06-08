@@ -1,37 +1,22 @@
 "use client";
 
+import { useAPiPedido } from "@/api/UseApiPedido";
 import { ChipApp } from "@/components/divider";
 import { IconButtonAppComTooltip } from "@/components/icon/icon-button-tooltip";
 import { TabelaPaginacao } from "@/components/tabela-paginacao";
 import { rotasApi } from "@/configs/RotasApi";
 import { rotasApp } from "@/configs/RotasApp";
-import { useApi } from "@/hooks/UseApi";
+import { statusPedido } from "@/enums/StatusPedidoEnum";
 import { useArquivo } from "@/hooks/UseArquivo";
 import { useNavigateApp } from "@/hooks/useNavigateApp";
-import { Tooltip, IconButton } from "@mui/material";
-
-export const statusPedido: any = {
-  0: { title: "Em aberto", color: "warning" }, //
-  1: { title: "Faturado", color: "primary" }, //success
-  2: { title: "Em entrega", color: "info" },
-  3: { title: "Entregue", color: "success" }, //warning
-  4: { title: "Cancelado", color: "error" }, //warning
-};
 
 export default function PedidoPaginacao() {
   const { navigate } = useNavigateApp();
   const { generatePdfFromBase64 } = useArquivo();
+  const { downloadPedido } = useAPiPedido();
 
-  const api = useApi({
-    method: "GET",
-    url: "pedidos/download-pedido?pedidoId=",
-  });
-
-  async function downloadPedido(id: string) {
-    const pdfBase64 = await api.action<any>({
-      urlParams: `${id}`,
-      message: "Download efetuado com sucesso!",
-    });
+  async function downloadPedidoLocal(id: string) {
+    const pdfBase64 = await downloadPedido.fetch(id);
     if (pdfBase64?.pdf) {
       const pdf = await generatePdfFromBase64(pdfBase64.pdf);
       const link = document.createElement("a");
@@ -74,7 +59,9 @@ export default function PedidoPaginacao() {
                 icon="fe:app-menu"
                 placement="top"
                 onClick={() =>
-                  navigate(`/pedidos/modificar-status-pedido/${params.id}`)
+                  navigate(
+                    `${rotasApp.pedido.modificarStatusPedido}/${params.id}`
+                  )
                 }
               />
             );
@@ -90,7 +77,7 @@ export default function PedidoPaginacao() {
                 titulo={"Download do pedido"}
                 placement="top"
                 icon="material-symbols-light:download"
-                onClick={() => downloadPedido(`${params.id}`)}
+                onClick={() => downloadPedidoLocal(`${params.id}`)}
               />
             );
           },

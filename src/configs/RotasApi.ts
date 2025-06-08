@@ -56,6 +56,9 @@ export const rotasApi = {
   },
   pedido: {
     paginacao: "pedidos/paginacao",
+    downloadPedido: "pedidos/download-pedido",
+    obter: "pedidos/get",
+    atualizaStatus: "pedidos/update-status",
   },
   parceiro: {
     obter: "parceiro/obter",
@@ -65,7 +68,16 @@ export const rotasApi = {
   },
   tabelaDePreco: {
     paginacao: "tabelas-de-precos/paginacao",
-    create: "tabelas-de-precos/create-admin",
-    obter: "tabelas-de-precos/get-conta-adm?id=",
+    create: "tabelas-de-precos/create",
+    editar: "tabelas-de-precos/update",
+    obter: "tabelas-de-precos/get-tabela",
+  },
+  configuracaoEmail: {
+    create: "/configuracoes-de-email/create",
+    obter: "/configuracoes-de-email/get-configuracao",
+  },
+  configuracaoPedido: {
+    create: "/configuracoes-de-pedido/update",
+    obter: "/configuracoes-de-pedido/get-configuracoes",
   },
 };
