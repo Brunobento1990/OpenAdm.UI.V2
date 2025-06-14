@@ -1,6 +1,6 @@
 import { rotasApi } from "@/configs/RotasApi";
 import { useApi } from "@/hooks/UseApi";
-import { ITabelaDePreco } from "@/interfaces/TabelaDePreco";
+import { IItemTabelaDePreco, ITabelaDePreco } from "@/interfaces/TabelaDePreco";
 
 export function useApiTabelaDePreco() {
   const apiTabelaAtiva = useApi({
@@ -11,6 +11,11 @@ export function useApiTabelaDePreco() {
   const apiCreate = useApi({
     method: "POST",
     url: rotasApi.tabelaDePreco.create,
+  });
+
+  const apiListarItens = useApi({
+    method: "GET",
+    url: rotasApi.tabelaDePreco.listarItens,
   });
 
   const apiUpdate = useApi({
@@ -45,6 +50,14 @@ export function useApiTabelaDePreco() {
     return await apiObter.action({ urlParams: `?id=${id}` });
   }
 
+  async function listarItens(
+    tabelaDePrecoId: string
+  ): Promise<IItemTabelaDePreco[] | undefined> {
+    return await apiListarItens.action({
+      urlParams: `?tabelaDePrecoId=${tabelaDePrecoId}`,
+    });
+  }
+
   return {
     obterTabelaDePrecoAtivaPorProdutoId: {
       fetch: obterTabelaDePrecoAtivaPorProdutoId,
@@ -60,6 +73,10 @@ export function useApiTabelaDePreco() {
     obter: {
       fetch: obter,
       status: apiObter.statusRequisicao,
+    },
+    listarItens: {
+      fetch: listarItens,
+      status: apiListarItens.statusRequisicao,
     },
   };
 }

@@ -4,9 +4,11 @@ import { useFormikAdapter } from "@/adapters/FormikAdapter";
 import { YupAdapter } from "@/adapters/YupAdapter";
 import { useApiParceiro } from "@/api/UseApiParceiro";
 import { BoxApp } from "@/components/box/BoxApp";
+import { DividerApp } from "@/components/divider";
 import { DropDownApp } from "@/components/dropdown/DropDownApp";
 import { FormRoot } from "@/components/form/FormRoot";
 import { IconButtonAppComTooltip } from "@/components/icon/icon-button-tooltip";
+import { IconConsultaCep } from "@/components/icon/icon-consulta-cep";
 import { InputApp, MaskType } from "@/components/input/InputApp";
 import { InputFile } from "@/components/input/InputFile";
 import { LoadingAppTexto } from "@/components/loading";
@@ -122,7 +124,7 @@ export function ParceiroForm() {
         .map((x) => {
           return {
             ...x,
-            telefone: limparMascaraTelefone(x.telefone) ?? '',
+            telefone: limparMascaraTelefone(x.telefone) ?? "",
           };
         }),
       redesSociais: form.values.redesSociais.filter(
@@ -145,6 +147,15 @@ export function ParceiroForm() {
     const logo = await resolveUploadImagem(arquivos[0]);
     form.setValue({
       logo: recortarBase64(logo).base64,
+    });
+  }
+
+  function setEndereco(key: string, value: any) {
+    form.setValue({
+      enderecoParceiro: {
+        ...(form.values.enderecoParceiro ?? {}),
+        [key]: value,
+      } as any,
     });
   }
 
@@ -324,6 +335,86 @@ export function ParceiroForm() {
               </BoxApp>
             ))}
           </Card>
+        </FormRoot.FormItemRow>
+      </FormRoot.FormRow>
+      <DividerApp chip="Endereço" marginTop="1rem" width="100%" cor="primary" />
+      <FormRoot.FormRow spacing={3}>
+        <FormRoot.FormItemRow sm={3} xs={12}>
+          <BoxApp display="flex" alignItems="center">
+            <InputApp
+              label="CEP"
+              id="cep"
+              onChange={setEndereco}
+              value={form.values.enderecoParceiro?.cep}
+              maxLength={8}
+            />
+            <IconConsultaCep
+              setEndereco={(endereco) =>
+                form.setValue({
+                  enderecoParceiro: endereco,
+                })
+              }
+              cep={form.values.enderecoParceiro?.cep}
+            />
+          </BoxApp>
+        </FormRoot.FormItemRow>
+        <FormRoot.FormItemRow sm={6} xs={12}>
+          <InputApp
+            label="Rua"
+            id="logradouro"
+            onChange={setEndereco}
+            value={form.values.enderecoParceiro?.logradouro}
+            maxLength={255}
+          />
+        </FormRoot.FormItemRow>
+        <FormRoot.FormItemRow sm={3} xs={12}>
+          <InputApp
+            label="N°"
+            id="numero"
+            onChange={setEndereco}
+            value={form.values.enderecoParceiro?.numero}
+            maxLength={10}
+          />
+        </FormRoot.FormItemRow>
+      </FormRoot.FormRow>
+      <FormRoot.FormRow spacing={3}>
+        <FormRoot.FormItemRow sm={6} xs={12}>
+          <InputApp
+            label="Cidade"
+            id="localidade"
+            onChange={setEndereco}
+            value={form.values.enderecoParceiro?.localidade}
+            maxLength={255}
+          />
+        </FormRoot.FormItemRow>
+        <FormRoot.FormItemRow sm={3} xs={12}>
+          <InputApp
+            label="Bairro"
+            id="bairro"
+            onChange={setEndereco}
+            value={form.values.enderecoParceiro?.bairro}
+            maxLength={255}
+          />
+        </FormRoot.FormItemRow>
+        <FormRoot.FormItemRow sm={3} xs={12}>
+          <InputApp
+            label="UF"
+            id="uf"
+            onChange={setEndereco}
+            value={form.values.enderecoParceiro?.uf}
+            maxLength={2}
+          />
+        </FormRoot.FormItemRow>
+      </FormRoot.FormRow>
+      <FormRoot.FormRow spacing={3}>
+        <FormRoot.FormItemRow sm={12} xs={12}>
+          <InputApp
+            label="Complemento"
+            id="complemento"
+            onChange={setEndereco}
+            value={form.values.enderecoParceiro?.complemento}
+            maxLength={255}
+          />
         </FormRoot.FormItemRow>
       </FormRoot.FormRow>
       {form.values.logo && (

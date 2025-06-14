@@ -4,18 +4,23 @@ import { useAPiPedido } from "@/api/UseApiPedido";
 import { ChipApp } from "@/components/divider";
 import { IconButtonAppComTooltip } from "@/components/icon/icon-button-tooltip";
 import { TabelaPaginacao } from "@/components/tabela-paginacao";
+import { listaIcones } from "@/configs/listaIcones";
 import { rotasApi } from "@/configs/RotasApi";
 import { rotasApp } from "@/configs/RotasApp";
 import { statusPedido } from "@/enums/StatusPedidoEnum";
 import { useArquivo } from "@/hooks/UseArquivo";
 import { useNavigateApp } from "@/hooks/useNavigateApp";
+import { useState } from "react";
 
 export default function PedidoPaginacao() {
   const { navigate } = useNavigateApp();
   const { generatePdfFromBase64 } = useArquivo();
   const { downloadPedido } = useAPiPedido();
 
+  const [pedidoIdDownload, setPedidoIdDownload] = useState<string>();
+
   async function downloadPedidoLocal(id: string) {
+    setPedidoIdDownload(id);
     const pdfBase64 = await downloadPedido.fetch(id);
     if (pdfBase64?.pdf) {
       const pdf = await generatePdfFromBase64(pdfBase64.pdf);
@@ -26,6 +31,7 @@ export default function PedidoPaginacao() {
       link.click();
       document.body.removeChild(link);
     }
+    setPedidoIdDownload(undefined);
   }
 
   return (
@@ -76,7 +82,11 @@ export default function PedidoPaginacao() {
               <IconButtonAppComTooltip
                 titulo={"Download do pedido"}
                 placement="top"
-                icon="material-symbols-light:download"
+                icon={
+                  pedidoIdDownload === params.id
+                    ? listaIcones.loading
+                    : listaIcones.download
+                }
                 onClick={() => downloadPedidoLocal(`${params.id}`)}
               />
             );
@@ -100,6 +110,7 @@ export default function PedidoPaginacao() {
         // },
       ]}
       url={rotasApi.pedido.paginacao}
+      urlAdd={rotasApp.pedido.create}
     />
   );
 }

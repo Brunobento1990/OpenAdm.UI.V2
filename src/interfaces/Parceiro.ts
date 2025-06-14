@@ -1,5 +1,5 @@
 import { RedeSocialEnum } from "@/enums/RedeSocialEnum";
-import { IBase } from "./Base";
+import { IBase, IEnderecoBase } from "./Base";
 
 export interface IParceiro extends IBase {
   razaoSocial: string;
@@ -8,6 +8,7 @@ export interface IParceiro extends IBase {
   logo?: string;
   telefones: ITelefoneParceiro[];
   redesSociais: IRedeSocial[];
+  enderecoParceiro?: IEnderecoBase;
 }
 
 export interface ITelefoneParceiro {

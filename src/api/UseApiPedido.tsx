@@ -13,6 +13,11 @@ export function useAPiPedido() {
     url: rotasApi.pedido.obter,
   });
 
+  const apiCriar = useApi({
+    method: "POST",
+    url: rotasApi.pedido.criar,
+  });
+
   const apiAtualizarStatus = useApi({
     method: "PUT",
     url: rotasApi.pedido.atualizaStatus,
@@ -26,6 +31,13 @@ export function useAPiPedido() {
 
   async function obter(id: string): Promise<IPedido | undefined> {
     return await apiObter.action({ urlParams: `?pedidoId=${id}` });
+  }
+
+  async function criar(body: Partial<IPedido>): Promise<IPedido | undefined> {
+    return await apiCriar.action({
+      body,
+      message: "Pedido criado com sucesso",
+    });
   }
 
   async function atualizarStatus(body: any): Promise<any> {
@@ -47,6 +59,10 @@ export function useAPiPedido() {
     atualizarStatus: {
       fetch: atualizarStatus,
       status: apiAtualizarStatus.statusRequisicao,
+    },
+    criar: {
+      fetch: criar,
+      status: apiCriar.statusRequisicao,
     },
   };
 }

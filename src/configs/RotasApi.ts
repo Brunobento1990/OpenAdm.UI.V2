@@ -21,6 +21,7 @@ export const rotasApi = {
   cliente: {
     paginacao: "usuarios/paginacao",
     create: "usuarios/create-admin",
+    paginacaoDropdown: "usuarios/paginacao-drop-down",
     atualizarSenha: "usuario/atualizar-senha-adm",
     obter: "usuarios/get-conta-adm?id=",
   },
@@ -30,6 +31,7 @@ export const rotasApi = {
     create: "pesos/create",
     update: "pesos/update",
     obter: "pesos/get-peso",
+    listar: "pesos/list",
   },
   tamanho: {
     paginacao: "tamanhos/paginacao",
@@ -37,6 +39,7 @@ export const rotasApi = {
     create: "tamanhos/create",
     update: "tamanhos/update",
     obter: "tamanhos/get-tamanho",
+    listar: "tamanhos/list",
   },
   produto: {
     paginacao: "produtos/paginacao",
@@ -44,6 +47,7 @@ export const rotasApi = {
     create: "produtos/create",
     update: "produtos/update",
     obter: "produtos/get-produto",
+    paginacaoDropDown: "produtos/paginacao-drop-down",
   },
   movimentoProduto: {
     paginacao: "movimentacao-de-produto/paginacao",
@@ -59,6 +63,7 @@ export const rotasApi = {
     downloadPedido: "pedidos/download-pedido",
     obter: "pedidos/get",
     atualizaStatus: "pedidos/update-status",
+    criar: "pedidos-adm/create",
   },
   parceiro: {
     obter: "parceiro/obter",
@@ -71,6 +76,8 @@ export const rotasApi = {
     create: "tabelas-de-precos/create",
     editar: "tabelas-de-precos/update",
     obter: "tabelas-de-precos/get-tabela",
+    listar: "tabelas-de-precos/list",
+    listarItens: "item-tabela-de-preco/obter-itens",
   },
   configuracaoEmail: {
     create: "/configuracoes-de-email/create",

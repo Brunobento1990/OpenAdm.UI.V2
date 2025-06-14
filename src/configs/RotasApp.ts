@@ -64,6 +64,7 @@ export const rotasApp = {
   },
   pedido: {
     modificarStatusPedido: "/vendas/pedidos/modificar-status-pedido",
+    create: "/vendas/pedidos/create",
     paginacao: "/vendas/pedidos",
   },
 };

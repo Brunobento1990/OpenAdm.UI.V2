@@ -67,12 +67,6 @@ export function ModificarStatusPedidoForm() {
         />
         <TextApp titulo={`Cliente: ${form.values.usuario}`} />
         <TextApp titulo={`Total: ${moneyMascara(form.values.valorTotal)}`} />
-        {/* {status?.color && (
-          <BoxApp display="flex" gap="1rem">
-            <TextApp texto="Status: " />
-            <StatusApp cor={status.color} titulo={status.title} />
-          </BoxApp>
-        )} */}
       </BoxApp>
       <DividerApp
         cor="primary"

@@ -1,4 +1,4 @@
-import { IBase } from "./Base";
+import { IBase, IEnderecoBase } from "./Base";
 
 export interface ICliente extends IBase {
   email: string;
@@ -11,4 +11,5 @@ export interface ICliente extends IBase {
   isAtacado?: boolean;
   senha: string;
   reSenha: string;
+  enderecoUsuario?: IEnderecoBase;
 }
