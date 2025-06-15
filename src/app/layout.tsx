@@ -17,6 +17,10 @@ export default function RootLayout({
 
   return (
     <html lang="pt-BR">
+      <head>
+        <title>{`Open Adm - Ecommerce`}</title>
+        <meta name="description" content={`Open Adm – Ecommerce.`} />
+      </head>
       <body>
         <ThemeProvider theme={baselightTheme}>
           <AuthProviderApp>

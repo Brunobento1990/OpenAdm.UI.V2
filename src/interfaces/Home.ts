@@ -47,6 +47,7 @@ export interface IPosicaoEstoqueHome {
   produto: string;
   tamanho: string;
   peso: string;
+  foto: string;
 }
 
 export interface IUsuarioHome {

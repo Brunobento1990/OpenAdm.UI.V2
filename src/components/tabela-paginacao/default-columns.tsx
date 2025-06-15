@@ -3,6 +3,7 @@ import { useApi } from "@/hooks/UseApi";
 import { useNavigateApp } from "@/hooks/useNavigateApp";
 import { IconButtonAppComTooltip } from "../icon/icon-button-tooltip";
 import { useModal } from "../modal";
+import { formatDateComHoras } from "@/utils/mascaras/FormtaDate";
 
 interface propsDefaultColumns {
   urlDelete?: string;
@@ -99,5 +100,12 @@ export function DefaultColuns(props: propsDefaultColumns) {
     flex: 0.2,
   };
 
-  return defaultColumns;
+  return [
+    {
+      field: "dataDeCriacao",
+      headerName: "Data criação",
+      renderCell: (row: any) => formatDateComHoras(row?.dataDeCriacao),
+    },
+    defaultColumns,
+  ];
 }

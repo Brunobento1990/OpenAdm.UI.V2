@@ -18,6 +18,11 @@ export function useApiProduto() {
     url: rotasApi.produto.update,
   });
 
+  const apiInativar = useApi({
+    method: "PUT",
+    url: rotasApi.produto.inativar,
+  });
+
   async function obter(id: string): Promise<IProduto | undefined> {
     return await apiGet.action({ urlParams: `?id=${id}` });
   }
@@ -34,6 +39,13 @@ export function useApiProduto() {
     return await apiUpdate.action({ body });
   }
 
+  async function inativar(id: string): Promise<any> {
+    return await apiInativar.action({
+      urlParams: id,
+      message: "Produto inativado com sucesso",
+    });
+  }
+
   return {
     obter: {
       fetch: obter,
@@ -46,6 +58,10 @@ export function useApiProduto() {
     update: {
       fetch: update,
       status: apiUpdate.statusRequisicao,
+    },
+    inativar: {
+      fetch: inativar,
+      status: apiInativar.statusRequisicao,
     },
   };
 }

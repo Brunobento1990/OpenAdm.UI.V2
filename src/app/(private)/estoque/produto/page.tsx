@@ -1,12 +1,40 @@
 "use client";
 
+import { useApiProduto } from "@/api/UseApiProduto";
 import { CheckBoxApp } from "@/components/checkbox/inedx";
+import { useModal } from "@/components/modal";
 import { TabelaPaginacao } from "@/components/tabela-paginacao";
 import { rotasApi } from "@/configs/RotasApi";
 import { rotasApp } from "@/configs/RotasApp";
+import { IProduto } from "@/interfaces/Produto";
 import { Box } from "@mui/material";
+import { useState } from "react";
 
 export default function ProdutoPaginacao() {
+  const [refresh, setRefresh] = useState(false);
+  const { inativar } = useApiProduto();
+  const { show } = useModal();
+
+  function inativarProduto(produto: IProduto) {
+    if (!produto) {
+      return;
+    }
+    show({
+      confirmarPromise: async () => {
+        const response = await inativar.fetch(produto.id);
+        if (response?.result) {
+          setRefresh((state) => !state);
+        }
+      },
+      mensagem: [
+        `Produto: ${produto.descricao}`,
+        `Deseja realmente ${
+          produto.inativoEcommerce ? "ativar" : "inativar"
+        } o produto?`,
+      ],
+    });
+  }
+
   return (
     <TabelaPaginacao
       columns={[
@@ -42,8 +70,11 @@ export default function ProdutoPaginacao() {
           minWidth: 200,
           field: "inativoEcommerce",
           headerName: "Inativo",
-          renderCell: (params: any) => (
-            <CheckBoxApp value={params.inativoEcommerce} />
+          renderCell: (params: IProduto) => (
+            <CheckBoxApp
+              value={params.inativoEcommerce}
+              onChange={() => inativarProduto(params)}
+            />
           ),
         },
       ]}
@@ -52,6 +83,7 @@ export default function ProdutoPaginacao() {
       urlDelete={rotasApi.produto.delete}
       urlView={rotasApp.produto.view}
       urlEdit={rotasApp.produto.edit}
+      refreshPai={refresh}
     />
   );
 }

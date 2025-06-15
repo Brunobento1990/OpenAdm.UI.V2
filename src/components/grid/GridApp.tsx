@@ -12,7 +12,6 @@ interface propsGridApp {
   withItem?: boolean;
   marginTop?: string;
   padding?: string;
-  item?: boolean;
   width?: string;
   height?: string;
   alignItems?: alignItems;

@@ -48,6 +48,7 @@ export const rotasApi = {
     update: "produtos/update",
     obter: "produtos/get-produto",
     paginacaoDropDown: "produtos/paginacao-drop-down",
+    inativar: "produtos/inativar-ativar?id=",
   },
   movimentoProduto: {
     paginacao: "movimentacao-de-produto/paginacao",

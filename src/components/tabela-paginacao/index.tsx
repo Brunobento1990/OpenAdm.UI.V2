@@ -92,7 +92,11 @@ export function TabelaPaginacao(props: tableProps) {
     [props]
   );
 
-  const newColumns = [...props.columns, defaultColuns];
+  const newColumns = [
+    { field: "numero", headerName: "N°" },
+    ...props.columns,
+    ...defaultColuns,
+  ];
 
   return (
     <BoxApp
