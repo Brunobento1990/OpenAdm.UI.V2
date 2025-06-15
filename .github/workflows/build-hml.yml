@@ -1,0 +1,24 @@
+name: Docker Image CI
+
+on:
+  push:
+    branches: ['develop']
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: Make envfile
+        run: |
+          cat > .env.production
+          echo "NEXT_PUBLIC_URL_API=${{ secrets.URL_API_HML }}" >> .env.production
+          echo "NEXT_PUBLIC_PRIVATE_KEY=${{ secrets.PRIVATE_KEY_HML }}" >> .env.production
+          echo "$(<.env.production)"
+      - name: Build
+        run: docker build . -t brunobentocaina/open-adm-ui-v2:stating
+      - name: Push
+        run: |
+          docker login -u brunobentocaina -p ${{ secrets.DOCKER_HUB_KEY }}
+          docker push brunobentocaina/open-adm-ui-v2:stating
