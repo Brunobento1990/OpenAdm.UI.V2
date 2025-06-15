@@ -4,12 +4,9 @@ import ChipApp from "@/components/chip";
 import { TabelaPaginacao } from "@/components/tabela-paginacao";
 import { rotasApi } from "@/configs/RotasApi";
 import { rotasApp } from "@/configs/RotasApp";
+import { movimentacaoEstoqueEnum } from "@/enums/MovimentacaoEstoqueEnum";
+import { IPosicaoEstoqueHome } from "@/interfaces/Home";
 import { formatDateComHoras } from "@/utils/mascaras/FormtaDate";
-
-export const quantidade: any = {
-  0: { title: "Em aberto", color: "warning" },
-  1: { title: "Entregue", color: "success" },
-};
 
 export default function PosicaoEstoquePaginacao() {
   return (
@@ -38,8 +35,8 @@ export default function PosicaoEstoquePaginacao() {
           minWidth: 200,
           field: "quantidade",
           headerName: "Posição do estoque",
-          renderCell: (params: any) => {
-            const status = quantidade[params.quantidade > 0 ? 1 : 0];
+          renderCell: (params: IPosicaoEstoqueHome) => {
+            const status = movimentacaoEstoqueEnum[params.quantidade > 0 ? 1 : 0];
 
             return (
               <ChipApp

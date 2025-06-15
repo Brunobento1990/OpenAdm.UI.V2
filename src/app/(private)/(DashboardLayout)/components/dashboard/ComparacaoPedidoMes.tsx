@@ -14,9 +14,6 @@ interface PropsHome {
 }
 
 const ComparacaoPedidoMes = (props: PropsHome) => {
-  if (!props.variacao) {
-    return <></>;
-  }
   // chart color
   const theme = useTheme();
   const primary = theme.palette.primary.main;
@@ -76,6 +73,10 @@ const ComparacaoPedidoMes = (props: PropsHome) => {
     props.variacao?.totalAnoAnterior ?? 0,
     props.variacao?.totalAnoAtual,
   ];
+
+  if (!props.variacao) {
+    return <></>;
+  }
 
   return (
     <DashboardCard title="Comparação do mês">
