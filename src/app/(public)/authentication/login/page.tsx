@@ -32,7 +32,6 @@ const Login2 = () => {
           sx={{ height: "100vh" }}
         >
           <GridApp
-            item
             xs={12}
             sm={12}
             lg={4}

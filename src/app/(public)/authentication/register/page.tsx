@@ -1,12 +1,12 @@
 "use client";
-import { Grid, Box, Card, Typography, Stack } from "@mui/material";
-import Link from "next/link";
-import AuthRegister from "../auth/AuthRegister";
-import { Logo } from "@/components/logo/Logo";
+// import { Grid, Box, Card, Typography, Stack } from "@mui/material";
+// import Link from "next/link";
+// import AuthRegister from "../auth/AuthRegister";
+// import { Logo } from "@/components/logo/Logo";
 
 const Register2 = () => (
   <>
-    <Box
+    {/* <Box
       sx={{
         position: "relative",
         "&:before": {
@@ -86,7 +86,7 @@ const Register2 = () => (
           </Card>
         </Grid>
       </Grid>
-    </Box>
+    </Box> */}
   </>
 );
 
